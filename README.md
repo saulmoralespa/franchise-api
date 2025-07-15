@@ -41,6 +41,61 @@ API REST para gestionar franquicias, sucursales y productos con stock. Permite c
    java -jar target/*.jar
    ```
 
+### Despliegue en AWS con Terraform
+
+#### Requisitos
+- [Terraform](https://www.terraform.io/downloads.html) instalado
+- [AWS CLI](https://aws.amazon.com/cli/) instalado y configurado
+- Cuenta de AWS con permisos necesarios
+
+#### Variables de Terraform
+Crear un archivo `terraform.tfvars`:
+```hcl
+project_name = "franchise-api"
+db_name      = "franchise"
+db_username  = "franchise"
+db_password  = "tu-contraseña-segura"
+```
+
+#### Infraestructura provisionada
+- Base de datos MySQL RDS
+  - Instance class: db.t3.micro
+  - Engine: MySQL 8.0
+  - Storage: 20GB
+  - Subnet group privado
+  - Security group configurado
+
+#### Comandos de Terraform
+
+1. Inicializar Terraform:
+   ```bash
+   terraform init
+   ```
+
+2. Ver plan de ejecución:
+   ```bash
+   terraform plan
+   ```
+
+3. Aplicar cambios:
+   ```bash
+   terraform apply
+   ```
+
+4. Para destruir la infraestructura:
+   ```bash
+   terraform destroy
+   ```
+
+#### Variables de entorno para RDS
+Después del despliegue, actualizar el archivo `.env` con los datos de conexión a RDS:
+```bash
+SPRING_DATASOURCE_URL=jdbc:mysql://<rds-endpoint>:3306/franchise
+MYSQL_USER=franchise
+MYSQL_PASSWORD=<tu-contraseña-segura>
+MYSQL_DATABASE=franchise
+```
+
 ## Pruebas
 Ejecutar las pruebas unitarias:
 ```bash

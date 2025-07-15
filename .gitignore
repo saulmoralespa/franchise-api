@@ -3,5 +3,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+.terraform/
+*.backup
+**/.terraform/*
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+linux_amd64
+
 .env
 .vscode/
